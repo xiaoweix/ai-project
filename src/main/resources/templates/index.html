@@ -8,22 +8,39 @@
 <body>
 <div id="app">
     <div style="display: flex; justify-content: center; font-weight: bold; font-size: 30px; position: relative; top: 30px; align-content: center; flex-direction: column; align-items: flex-start; flex-wrap: wrap; border: 1px solid #FFF; width:620px;margin:0 auto">
-        <h1> Hello Ai</h1>
-        <el-upload
-                class="upload-demo"
-                action="http://127.0.0.1:8080/upload"
-                :on-success="handleAvatarSuccess">
-            <el-button size="small" type="primary">点击上传</el-button>
-            <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
-        </el-upload>
+        <span style="color: cadetblue;font-size: 21px;margin: 20px auto" title="小demo小demo小demo小demo小demo小demo">基于百度智能云API的图片文字识别小demo</span>
+        <el-tabs v-model="activeName" type="border-card" style="width: 800px;">
+            <el-tab-pane label="图片文字识别" name="tupianwenzishibie">
+                <el-upload
+                        style="width: 50%"
+                        action="http://127.0.0.1:8080/upload"
+                        :on-remove="handleRemove"
+                        :file-list="fileList"
+                        list-type="picture"
+                        :on-success="handleAvatarSuccess"
+                >
+                    <el-button size="small" type="primary">点击上传</el-button>
+                </el-upload>
+                <span style="font-size: 1px; color: red;position: absolute; top: 41px; left: 100px">只能上传jpg/png文件，且不超过500kb</span>
+                <el-input
+                        style="margin-top: 50px"
+                        type="textarea"
+                        :rows="10"
+                        placeholder="结果展示在这里"
+                        v-model="words"
+                ></el-input>
+            </el-tab-pane>
+            <el-tab-pane label="图片文字识别" name="tupianwenzishibie1">
+                <el-empty description="暂未开发"></el-empty>
+            </el-tab-pane>
+            <el-tab-pane label="图片文字识别" name="tupianwenzishibie2">
+                <el-empty description="暂未开发"></el-empty>
+            </el-tab-pane>
+            <el-tab-pane label="图片文字识别" name="tupianwenzishibie3">
+                <el-empty description="暂未开发"></el-empty>
+            </el-tab-pane>
+        </el-tabs>
 
-        <el-input
-                type="textarea"
-                :rows="4"
-                placeholder="结果展示在这里"
-                v-model="words">
-        </el-input>
-        <el-button type="primary" @click="hello">Hello World</el-button>
     </div>
 
 </div>
@@ -37,22 +54,17 @@
     new Vue({
         el: '#app',
         data: {
+            fileList: [],
+            activeName: 'tupianwenzishibie',
             url: '',
-            words:''
+            words: ''
         },
         methods: {
             handleAvatarSuccess(res, file) {
-                console.log(res);
-                console.log(file);
                 this.words = res;
-                this.url = URL.createObjectURL(file.raw);
             },
-            hello() {
-                var keyword = this.keyword;
-                console.log(keyword)
-                axios.get("http://127.0.0.1:8080/hello").then(res=>{
-                    console.log(res.data);
-                })
+            handleRemove(file, fileList) {
+                console.log(file, fileList);
             },
         }
     })
