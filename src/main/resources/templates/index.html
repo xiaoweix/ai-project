@@ -13,11 +13,11 @@
             <el-tab-pane label="图片文字识别" name="tupianwenzishibie">
                 <el-upload
                         style="width: 50%"
-                        action="http://127.0.0.1:8080/upload"
-                        :on-remove="handleRemove"
+                        action="http://127.0.0.1:8080/picToWord"
+                        :on-remove="handleRemove1"
                         :file-list="fileList"
                         list-type="picture"
-                        :on-success="handleAvatarSuccess"
+                        :on-success="handleAvatarSuccess1"
                 >
                     <el-button size="small" type="primary">点击上传</el-button>
                 </el-upload>
@@ -30,8 +30,22 @@
                         v-model="words"
                 ></el-input>
             </el-tab-pane>
-            <el-tab-pane label="图片文字识别" name="tupianwenzishibie1">
-                <el-empty description="暂未开发"></el-empty>
+            <el-tab-pane label="图片内容识别" name="tupianwenzishibie1">
+                    <el-upload
+                            style="width: 50%"
+                            action="http://127.0.0.1:8080/imgRecognition"
+                            :on-remove="handleRemove2"
+                            :file-list="fileList"
+                            list-type="picture"
+                            :on-success="handleAvatarSuccess2"
+                    >
+                        <el-button size="small" type="primary">点击上传</el-button>
+                    </el-upload>
+                    <span style="font-size: 1px; color: red;position: absolute; top: 41px; left: 100px">只能上传jpg/png文件，且不超过500kb</span>
+                    <el-empty description="空空如也" v-if="isShow"></el-empty>
+                    <div v-for="item in container" :key="item">
+                        <p>类别：{{item.root}} 关键字：{{item.keyword}} 概率：{{item.score*100}}%</p>
+                    </div>
             </el-tab-pane>
             <el-tab-pane label="图片文字识别" name="tupianwenzishibie2">
                 <el-empty description="暂未开发"></el-empty>
@@ -54,16 +68,24 @@
     new Vue({
         el: '#app',
         data: {
+            isShow: true,
             fileList: [],
             activeName: 'tupianwenzishibie',
             url: '',
             words: ''
         },
         methods: {
-            handleAvatarSuccess(res, file) {
+            handleAvatarSuccess1(res, file) {
                 this.words = res;
             },
-            handleRemove(file, fileList) {
+            handleRemove1(file, fileList) {
+                console.log(file, fileList);
+            },
+            handleAvatarSuccess2(res, file) {
+                this.container = res.result;
+                this.isShow = false;
+            },
+            handleRemove2(file, fileList) {
                 console.log(file, fileList);
             },
         }

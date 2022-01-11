@@ -1,5 +1,6 @@
 package com.xiaowei.aiproject.utiles;
 
+import com.baidu.aip.imageclassify.AipImageClassify;
 import com.baidu.aip.ocr.AipOcr;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -13,6 +14,11 @@ public class Aiutils {
     public static final String APP_ID = "你的APPID";
     public static final String API_KEY = "你的API_KEY";
     public static final String SECRET_KEY = "你的SECRET_KEY";
+
+    //设置APPID/AK/SK
+    public static final String APP_ID_IMG = "你的APPID";
+    public static final String API_KEY_IMG = "你的API_KEY";
+    public static final String SECRET_KEY_IMG = "你的SECRET_KEY";
 
     public static String picToWord(byte[] file){
         // 初始化一个AipOcr
@@ -31,6 +37,14 @@ public class Aiutils {
             wordsData += word + " ";
         }
         return wordsData;
+    }
+    public static String imgRecognition(byte[] file) {
+        // 初始化一个AipImageClassify
+        AipImageClassify client = new AipImageClassify(APP_ID_IMG, API_KEY_IMG, SECRET_KEY_IMG);
+
+        // 调用接口
+        JSONObject res = client.advancedGeneral(file, new HashMap<String, String>());
+        return res.toString(2);
     }
     public static void main(String[] args) {
 
