@@ -2,6 +2,8 @@
 
 视频教程地址：https://www.bilibili.com/video/BV1UR4y1u74J
 
+项目前端地址：https://github.com/xiaoweix/ai-project-web
+
 文本处理控制台：https://console.bce.baidu.com/ai/#/ai/ocr/overview/index
 
 人工智能学习平台：https://www.paddlepaddle.org.cn/tutorials/projectdetail/1990733
